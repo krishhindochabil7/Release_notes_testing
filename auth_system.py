@@ -1,10 +1,13 @@
+import hashlib
+
 users = {
-    "admin": "password123",  # Weak hardcoded password
-    "user": "12345"
+    "admin": hashlib.sha256("StrongP@ssw0rd!".encode()).hexdigest(),
+    "user": hashlib.sha256("User$ecureP@ss".encode()).hexdigest()
 }
 
 def authenticate(username, password):
-    if username in users and users[username] == password:
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+    if username in users and users[username] == hashed_password:
         return "Access granted!"
     else:
         return "Access denied!"
